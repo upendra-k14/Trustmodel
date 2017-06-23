@@ -1,0 +1,61 @@
+impact of third term
+Generating negative set...
+Variables initialized
+Loss: 485.4651184082031
+Loss: 422.05938720703125
+Loss: 415.0177307128906
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 60
+Test Accuracy: 0.38423360263515166
+-----------------------------------------
+Loss: 384.90496826171875
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 80
+Test Accuracy: 0.3765551623600632
+-----------------------------------------
+Loss: 418.8148498535156
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 100
+Test Accuracy: 0.38422247446083996
+-----------------------------------------
+##########################################
+Margin 1.0
+a1 0.0, a2 0.0, a3 0.001
+Average accuracy 0.3816704131520183
+##########################################
+Generating negative set...
+Variables initialized
+Loss: 1426.35205078125
+Loss: 1305.995849609375
+Loss: 1301.551513671875
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 60
+Test Accuracy: 0.37776813336004095
+-----------------------------------------
+Loss: 1188.4832763671875
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 80
+Test Accuracy: 0.387427388662616
+-----------------------------------------
+Loss: 1135.90771484375
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 100
+Test Accuracy: 0.4107520420199862
+-----------------------------------------
+##########################################
+Margin 1.0
+a1 0.0, a2 0.0, a3 0.01
+Average accuracy 0.3919825213475477
+##########################################

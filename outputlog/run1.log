@@ -1,0 +1,35 @@
+Generating negative set...
+Variables initialized
+Loss: 9097.9248046875
+Loss: 6759.0908203125
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 50
+Test Accuracy: 0.4277670205426098
+-----------------------------------------
+Loss: 4755.375
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 75
+Test Accuracy: 0.45682268367051704
+-----------------------------------------
+Loss: 3284.7548828125
+Loss: 2108.659912109375
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 100
+Test Accuracy: 0.42313770002893325
+-----------------------------------------
+Loss: 1383.4869384765625
+Loss: 1135.0684814453125
+Loss: 951.060546875
+Loss: 735.4207763671875
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 200
+Test Accuracy: 0.3406000311588881
+-----------------------------------------

@@ -1,0 +1,48 @@
+log for Exp3 :
+phi1 off
+phi2 off
+phi3 on
+
+Generating negative set...
+Variables initialized
+Loss: 9197.0947265625
+Loss: 6851.26513671875
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 50
+Test Accuracy: 0.4349446929736707
+-----------------------------------------
+Loss: 4725.65673828125
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 60
+Test Accuracy: 0.4550866884778883
+-----------------------------------------
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 70
+Test Accuracy: 0.46087333911998396
+-----------------------------------------
+Loss: 3254.49365234375
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 80
+Test Accuracy: 0.4528054127439852
+-----------------------------------------
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 90
+Test Accuracy: 0.4486879882486479
+-----------------------------------------
+Loss: 2049.61181640625
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 100
+Test Accuracy: 0.4293027085976275
+-----------------------------------------
