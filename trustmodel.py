@@ -3,11 +3,12 @@ import numpy as np
 import random
 import os.path
 import pickle
+import math
 
 class BasicModel(object):
 
-    def __init__(self, n_nodes, n_dimension, batch_size=1024,
-        learning_rate=0.1, alpha=[0.1, 0.1, 0.1], margin=1.0):
+    def __init__(self, n_nodes, n_dimension, batch_size=1280,
+        learning_rate=0.01, alpha=[0.1, 0.1, 0.1], margin=1.0):
 
         # Add constants and class variables
         self.n_nodes = n_nodes
@@ -78,10 +79,19 @@ class BasicModel(object):
 
         W = tf.Variable(
             tf.random_uniform([self.n_dimension,1], maxval=0.9))
-        output = tf.reshape(
-            tf.matmul(tf.multiply(self.src_emb, self.target_emb), W),[-1])
+        output = tf.reshape(tf.matmul(tf.multiply(self.src_emb, self.target_emb), W),[-1])
+
+        # output = self.leakyrelu(output)
 
         return output
+
+    def leakyrelu(self, intensor):
+
+        pos = tf.nn.relu(intensor)
+        neg = tf.nn.relu(-intensor)
+        out = pos - tf.multiply(0.1,neg)
+
+        return out
 
     def nn_model(self):
         """
@@ -120,7 +130,7 @@ class BasicModel(object):
         pos_output = tf.squeeze(pos_output)
         neg_output = tf.squeeze(neg_output)
         pairwise_losses = tf.maximum(
-            10e-8, self.margin - pos_output + neg_output)
+            0.0, self.margin - pos_output + neg_output)
         phi1 = tf.multiply(
             self.alpha1,
             tf.norm(tf.multiply(self.H,pos_output-1.0)))
@@ -129,7 +139,7 @@ class BasicModel(object):
             tf.norm(tf.multiply(self.I,pos_output-1.0)))
 
         # Uses regularization
-        loss = tf.reduce_sum(pairwise_losses) + phi1 + phi2 + self.phi3
+        loss = tf.reduce_sum(pairwise_losses) - phi1 + phi2 + self.phi3
 
         # Without homophily and l2-loss
         # loss = tf.reduce_sum(pairwise_losses)
@@ -139,7 +149,7 @@ class BasicModel(object):
 
         return loss
 
-    def train(self, walks, logger, global_H, test_pairs, orig_set, max_iter = 100):
+    def train(self, walks, logger, global_H, valid_pairs, test_pairs, orig_set, max_iter = 1000):
         """
         Training and preparation of data
         """
@@ -152,6 +162,12 @@ class BasicModel(object):
                 pairs.append([start_node, nd])
         pairs_set = set(map(tuple, pairs))
         pairs = np.array(pairs)
+
+
+        # pairs = np.array(walks)
+        np.random.shuffle(pairs)
+        # pairs_set = set(map(tuple,walks))
+        pair_indices = list(range(pairs.shape[0]))
 
         # Generate negative set
         logger.write("Generating negative set...\n")
@@ -169,13 +185,15 @@ class BasicModel(object):
                 counter += 1
             if(counter>=k):
                 break
+        random_indices = list(range(k))
 
         # tensor for initialization of all variables U,V and W
         init = tf.global_variables_initializer()
 
         average_acc = 0.0
-        iter_list = [60,80,100]
-
+        iter_list = [60, 80, 100, 120, 140, 160, 180]
+        prev_acc = 0.01
+        curr_iter = 1
         with tf.Session() as sess:
 
             logger.write("Variables initialized\n")
@@ -185,7 +203,7 @@ class BasicModel(object):
 
                 # get next batch
                 input_nodes, H, I = self.get_next_batch(
-                    pairs, random_pairs, global_H, self.batch_size)
+                    pairs, pair_indices, random_pairs, random_indices, global_H, self.batch_size, i)
 
                 # feed dict
                 feed_dict = {
@@ -199,32 +217,51 @@ class BasicModel(object):
                     [self.loss, self.optimize],
                     feed_dict=feed_dict)
 
-                if(i%20==0):
+                if(i%10==0):
                     logger.write("Loss: {}\n".format(loss))
 
-                if(i in iter_list):
+                """flag = False
+                if(i%1==0):
                     acc = self.get_test_accuracy(
-                        orig_set, np.copy(test_pairs), sess, logger)
-                    average_acc += acc
+                        orig_set, np.copy(valid_pairs), sess, logger)
+                    logger.write("Iteration {}, Validation Accuracy: {}\n".format(i,acc))
+                    if math.fabs(prev_acc-acc)<0.00005:
+                        # stop iteration if true
+                        flag = True
+                    prev_acc = acc
+                """
+
+                if((i in iter_list) or flag):
                     logger.write("-----------------------------------------\n")
                     logger.write("Iteration {}\n".format(i))
+                    acc = self.get_test_accuracy(
+                        orig_set, np.copy(test_pairs), sess, logger)
+                    average_acc = acc
                     logger.write("Test Accuracy: {}\n".format(acc))
                     logger.write("-----------------------------------------\n")
 
-            #acc = self.get_test_accuracy(
-            #    orig_set, np.copy(test_pairs), sess, logger)
-            #logger.write("-----------------------------------------\n")
-            #logger.write("Iteration {}\n".format(max_iter))
-            #logger.write("Test Accuracy: {}\n".format(acc))
-            #logger.write("-----------------------------------------\n")
+
+
+                #if(flag):
+                #a    break
+
+                curr_iter += 1
+            """
+            acc = self.get_test_accuracy(
+                orig_set, np.copy(test_pairs), sess, logger)
+            logger.write("-----------------------------------------\n")
+            logger.write("Iteration {}\n".format(curr_iter))
+            logger.write("Test Accuracy: {}\n".format(acc))
+            logger.write("-----------------------------------------\n")
+            """
 
             # Save the model
             saver = tf.train.Saver()
             saver.save(sess, 'models/model_vars')
 
-        return average_acc/len(iter_list)
+        return curr_iter, average_acc
 
-    def get_next_batch(self, pairs, random_pairs, global_H, batch_size):
+    def get_next_batch(self, pairs, pair_indices, random_pairs, random_indices, global_H, batch_size, i):
         """
         Get batch data and other parameters for the batch
         pairs : positive pairs from random walk
@@ -234,8 +271,10 @@ class BasicModel(object):
         """
 
         # shuffle and truncate batch pairs
-        np.random.shuffle(pairs)
-        np.random.shuffle(random_pairs)
+        positive_samples = pairs[random.sample(pair_indices,batch_size)]
+        # st_index = (i-1)*batch_size
+        # positive_samples = pairs[st_index:st_index+batch_size]
+        random_samples = random_pairs[random.sample(random_indices,batch_size)]
 
         # initialize np arrays
         H = np.zeros((batch_size,))
@@ -260,14 +299,14 @@ class BasicModel(object):
 
         counter = 0
         for counter in range(batch_size):
-            u, v = pairs[counter]
+            u, v = positive_samples[counter]
             a, b = global_H[u][v]
             H[counter] = a
             I[counter] = b
             input_nodes[4*counter] = u
             input_nodes[4*counter+1] = v
-            input_nodes[4*counter+2] = random_pairs[counter][0]
-            input_nodes[4*counter+3] = random_pairs[counter][1]
+            input_nodes[4*counter+2] = random_samples[counter][0]
+            input_nodes[4*counter+3] = random_samples[counter][1]
 
         return input_nodes, H, I
 
@@ -281,15 +320,16 @@ class BasicModel(object):
 
         test_nodes = test_pairs.flatten()
         test_size = test_pairs.shape[0]
+        #print(test_size)
         test_set = set([(a,b) for a,b in test_pairs.tolist()])
         feed_dict = {self.inputX: test_nodes}
         # Test pairs output
-        logger.write("Getting test pairs output\n")
+        # logger.write("Getting test pairs output\n")
         test_output = sess.run(
             [self.output], feed_dict=feed_dict)
         test_output = np.array(test_output[0])
-        print(test_pairs.shape)
-        print(test_output.shape)
+        #print(test_pairs.shape)
+        #print(test_output.shape)
         final_output = np.concatenate(
             (test_pairs,np.expand_dims(test_output,axis=1)), axis=1)
 
@@ -331,7 +371,7 @@ class BasicModel(object):
 
         random_nodes = random_pairs.flatten()
         feed_dict = {self.inputX: random_nodes}
-        logger.write("Getting random pairs output\n")
+        # logger.write("Getting random pairs output\n")
         random_output = sess.run(
             [self.output], feed_dict=feed_dict)
         random_output = np.array(random_output[0])

@@ -29,7 +29,7 @@ def user_pair_sim(trust, rating):
 def similarity_C(trust, rating, user_item_rating_dict, user_category_dict):
 
     user_user_similarity = {}
-    epsilon = 10e-8
+    epsilon = 10e-6
     scaling_factor = 10.0
 
 
@@ -39,7 +39,8 @@ def similarity_H(trust, rating, user_item_rating_dict, user_category_dict):
     user_user_similarity = {}
 
     theta = 0.5
-    epsilon = 10e-8
+    epsilon = 10e-6
+    epsilon2 = 10e-8
     scaling_factor = 10.0
 
     for i in range(trust.shape[0]):
@@ -77,12 +78,12 @@ def similarity_H(trust, rating, user_item_rating_dict, user_category_dict):
             c_sim = count/27.0
             if c_sim == 0.0:
                 c_sim = epsilon
-            user_user_similarity[trust[i][0]][trust[i][1]] = (r_sim, c_sim*scaling_factor)
+            user_user_similarity[trust[i][0]][trust[i][1]] = (r_sim, c_sim)
 
         else:
             c_sim = count/27.0
             if c_sim == 0.0:
                 c_sim = epsilon
-            user_user_similarity[trust[i][0]][trust[i][1]] = (scaling_factor*(r_sim/(mod1*mod2+epsilon)),scaling_factor*c_sim)
+            user_user_similarity[trust[i][0]][trust[i][1]] = (r_sim/(mod1*mod2+epsilon2),c_sim)
 
     return user_user_similarity

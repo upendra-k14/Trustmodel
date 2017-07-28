@@ -9,7 +9,7 @@ class Graph():
 		self.p = p
 		self.q = q
 
-	def random_walk(self, walk_length, start_node):
+	def node2vec_walk(self, walk_length, start_node):
 		'''
 		Simulate a random walk starting from start node.
 		'''
@@ -47,7 +47,7 @@ class Graph():
 			print(str(walk_iter+1), '/', str(num_walks))
 			random.shuffle(nodes)
 			for node in nodes:
-				walks.append(self.random_walk(walk_length=walk_length, start_node=node))
+				walks.append(self.node2vec_walk(walk_length=walk_length, start_node=node))
 
 		return walks
 
@@ -106,6 +106,8 @@ class Graph():
 def alias_setup(probs):
 	'''
 	Compute utility lists for non-uniform sampling from discrete distributions.
+	Refer to https://hips.seas.harvard.edu/blog/2013/03/03/the-alias-method-efficient-sampling-with-many-discrete-outcomes/
+	for details
 	'''
 	K = len(probs)
 	q = np.zeros(K)

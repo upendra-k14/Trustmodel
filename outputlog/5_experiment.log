@@ -1,0 +1,41 @@
+impact of homophily term
+impact of homophily term
+Generating negative set...
+impact of homophily term
+Generating negative set...
+Variables initialized
+Loss: 9123.642578125
+Loss: 6805.3701171875
+Loss: 4827.3720703125
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 60
+Test Accuracy: 0.45440786984487325
+-----------------------------------------
+Loss: 3284.63623046875
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 80
+Test Accuracy: 0.44874362912020654
+-----------------------------------------
+Loss: 2100.747314453125
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 100
+Test Accuracy: 0.42145734570786314
+-----------------------------------------
+Loss: 1422.8997802734375
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 120
+Test Accuracy: 0.3936925508001157
+-----------------------------------------
+##########################################
+Margin 1.0
+a1 0.1, a2 0.1, a3 0.1
+Average accuracy 0.42957534886826465
+##########################################

@@ -1,0 +1,144 @@
+impact of homophily term
+Generating negative set...
+Variables initialized
+Loss: 554.796875
+Loss: -179498.0
+Loss: -755150.5
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 60
+Test Accuracy: 0.29725579221472925
+-----------------------------------------
+Loss: -2398726.5
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 80
+Test Accuracy: 0.2874073579488549
+-----------------------------------------
+Loss: -5220569.5
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 100
+Test Accuracy: 0.2816540918296944
+-----------------------------------------
+Loss: -10173212.0
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 120
+Test Accuracy: 0.2791725089581803
+-----------------------------------------
+Loss: -15437012.0
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 140
+Test Accuracy: 0.2743873940041397
+-----------------------------------------
+##########################################
+Margin 1.0
+a1 0.1, a2 0.1, a3 0.1
+Average accuracy 0.2839754289911197
+##########################################
+Generating negative set...
+Variables initialized
+Loss: 7375.56640625
+Loss: -92708.9609375
+Loss: -346408.125
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 60
+Test Accuracy: 0.29312723954508024
+-----------------------------------------
+Loss: -1608215.5
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 80
+Test Accuracy: 0.2870067436736329
+-----------------------------------------
+Loss: -4139711.5
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 100
+Test Accuracy: 0.2824441922058267
+-----------------------------------------
+Loss: -7128104.0
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 120
+Test Accuracy: 0.2784157931049832
+-----------------------------------------
+Loss: -13897482.0
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 140
+Test Accuracy: 0.27587856936191046
+-----------------------------------------
+##########################################
+Margin 1.0
+a1 1.0, a2 1.0, a3 0.1
+Average accuracy 0.28337450757828675
+##########################################
+Generating negative set...
+Variables initialized
+Loss: 9086.7958984375
+Loss: 6997.73828125
+Loss: 5079.4599609375
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 60
+Test Accuracy: 0.4278449177627918
+-----------------------------------------
+Loss: 3271.802978515625
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 80
+Test Accuracy: 0.435656896129621
+-----------------------------------------
+Loss: 2197.981689453125
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 100
+Test Accuracy: 0.37874741269947254
+-----------------------------------------
+Loss: -780.9879150390625
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 120
+Test Accuracy: 0.3664730364336427
+-----------------------------------------
+Loss: -25462.947265625
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 140
+Test Accuracy: 0.3540762502503839
+-----------------------------------------
+##########################################
+Margin 1.0
+a1 10.0, a2 10.0, a3 0.1
+Average accuracy 0.3925597026551825
+##########################################
+Generating negative set...
+Variables initialized
+Loss: -911.91796875
+Loss: -145694.40625
+Loss: -541740.0625
+Getting test pairs output
+Getting random pairs output
+-----------------------------------------
+Iteration 60
+Test Accuracy: 0.29751174022389887
+-----------------------------------------
